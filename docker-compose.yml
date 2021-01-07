@@ -11,8 +11,6 @@ services:
       MYSQL_PASSWORD: kJI6zkVYcXmo6Ebt
     ports:
       - "3306:3306"
-    volumes:
-    // - ./sql/database.sql:/docker-entrypoint-initdb.d/dump.sql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
