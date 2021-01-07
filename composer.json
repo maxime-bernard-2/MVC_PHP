@@ -1,0 +1,31 @@
+{
+    "name": "okharev/soul",
+    "description": "The 2020 - 2021 LP MVC Project made for the HotHotHot project in group 1",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Pellan Florian",
+            "email": "florian.pellan@live.fr"
+        },
+        {
+            "name": "Bernard Maxime",
+            "email": "maxime.bernard13.pro@gmail.com"
+        },
+        {
+            "name": "Fillols Thomas",
+            "email": "thomas.fillols@etu.univ-amu.fr"
+        },
+        {
+            "name": "Autard Simon",
+            "email": "simon.autard@etu.univ-amu.fr"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "require": {
+
+    }
+}
