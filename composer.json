@@ -26,6 +26,6 @@
         }
     },
     "require": {
-
+      "ext-ctype": "*"
     }
 }
