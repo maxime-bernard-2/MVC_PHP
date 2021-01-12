@@ -48,7 +48,7 @@ class Router
      * else it just returns 404
      * @return array|string
      */
-    public function resolve(): array|string
+    public function resolve()
     {
         $path = $this->request->getPath();
         $method = $this->request->method();
@@ -79,7 +79,7 @@ class Router
      * @param array $params
      * @return string|string[]
      */
-    public function renderView($view, $params = []): array|string
+    public function renderView($view, $params = [])
     {
         $layoutContent = $this->layoutContent();
         $viewContent = $this->renderOnlyView($view, $params);
@@ -90,7 +90,7 @@ class Router
     /**
      * @return bool|string
      */
-    protected function layoutContent(): bool|string
+    protected function layoutContent()
     {
         $layout = Application::$app->controller->layout;
 
@@ -104,7 +104,7 @@ class Router
      * @param array $params
      * @return bool|string
      */
-    protected function renderOnlyView($view, $params = []): bool|string
+    protected function renderOnlyView($view, $params = [])
     {
         // this is a Variable Variable which transforms the associative array in variables so that we can use it in the views
         foreach ($params as $key => $val) {
