@@ -26,7 +26,12 @@
         }
     },
     "require": {
-      "ext-ctype": "*",
-      "ext-pdo": "*"
+        "twig/twig": "^2.0"
+    }
+    ,
+    "require-dev": {
+        "roave/security-advisories": "dev-master",
+        "ext-ctype": "*",
+        "ext-pdo": "*"
     }
 }
