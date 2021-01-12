@@ -17,7 +17,7 @@ class Database
     public function connect(): PDO
     {
         try {
-            return new PDO("mysql:host=database;dbname=hothothot;port=3306", 'hothothot', 'kJI6zkVYcXmo6Ebt');
+            return new PDO("mysql:host={$_ENV['DATABASE_HOST']};dbname={$_ENV['DATABASE_NAME']};port={$_ENV['DATABASE_PORT']}", $_ENV['DATABASE_USER'], $_ENV['DATABASE_PASSWORD']);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }

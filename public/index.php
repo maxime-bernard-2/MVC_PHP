@@ -7,6 +7,7 @@ use app\controllers\ContactController;
 use app\core\Application;
 
 $app = new Application(dirname(__DIR__));
+$app->loadEnv();
 
 /* Example of usage for routing */
 $app->router->get('/contact', [ContactController::class, 'index']);
