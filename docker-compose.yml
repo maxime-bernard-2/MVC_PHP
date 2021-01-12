@@ -28,7 +28,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./site:/site
+      - ./:/site
       - ./conf/vhost.conf:/etc/apache2/sites-available/000-default.conf
       - ./conf/apache.conf:/etc/apache2/conf-available/z-site.conf
       - ./conf/php.ini:/usr/local/etc/php/conf.d/site.ini
