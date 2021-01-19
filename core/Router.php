@@ -57,6 +57,7 @@ class Router
 
         if ($callback === false) {
             $this->response->setStatusCode(404);
+            var_dump(Application::$ROOT_DIR);
             return $this->renderView("/errors/_404");
         }
 
