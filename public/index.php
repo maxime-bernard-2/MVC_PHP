@@ -8,7 +8,10 @@ $dotenv->load();
 use app\controllers\ContactController;
 use app\controllers\UserController;
 use app\core\Application;
+use app\core\Database;
 
+$db = new Database();
+$db->connect();
 $app = new Application(dirname(__DIR__));
 
 /* Example of usage for routing */

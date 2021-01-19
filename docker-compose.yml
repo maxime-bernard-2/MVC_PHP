@@ -5,10 +5,10 @@ services:
     image: mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: jaimelespates
-      MYSQL_DATABASE: hothothot
-      MYSQL_USER: hothothot
-      MYSQL_PASSWORD: kJI6zkVYcXmo6Ebt
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: soul
+      MYSQL_USER: soul
+      MYSQL_PASSWORD: soul_admin
     ports:
       - "3306:3306"
 
@@ -18,7 +18,7 @@ services:
     environment:
       PMA_HOST: database
       PMA_USER: root
-      PMA_PASSWORD: jaimelespates
+      PMA_PASSWORD: root
     ports:
       - "8080:80"
 
