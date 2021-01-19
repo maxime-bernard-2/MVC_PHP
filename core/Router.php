@@ -2,6 +2,9 @@
 
 namespace app\core;
 
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
 /**
  * Class Router
  * @package core
@@ -50,6 +53,9 @@ class Router
      */
     public function resolve()
     {
+        $loader = new FilesystemLoader("../views");
+        $twig = new Environment($loader);
+
         $path = $this->request->getPath();
         $method = $this->request->method();
 
@@ -57,13 +63,12 @@ class Router
 
         if ($callback === false) {
             $this->response->setStatusCode(404);
-            var_dump(Application::$ROOT_DIR);
-            return $this->renderView("/errors/_404");
+            return $twig->render("/errors/_404.html.twig");
         }
 
         // if it is a string then we render a the view corresponding to the string
         if (is_string($callback)) {
-            return $this->renderView($callback);
+            return $twig->render($callback);
         }
 
         // if it is an array we instantiate the controller
@@ -75,45 +80,45 @@ class Router
         return $callback($this->request);
     }
 
-    /**d
-     * @param $view
-     * @param array $params
-     * @return string|string[]
-     */
-    public function renderView($view, $params = [])
-    {
-        $layoutContent = $this->layoutContent();
-        $viewContent = $this->renderOnlyView($view, $params);
-
-        return str_replace('{{ content }}', $viewContent, $layoutContent);
-    }
-
-    /**
-     * @return bool|string
-     */
-    protected function layoutContent()
-    {
-        $layout = Application::$app->controller->layout;
-
-        ob_start();
-        include_once Application::$ROOT_DIR . "/views/layouts/$layout.php";
-        return ob_get_clean();
-    }
-
-    /**
-     * @param $view
-     * @param array $params
-     * @return bool|string
-     */
-    protected function renderOnlyView($view, $params = [])
-    {
-        // this is a Variable Variable which transforms the associative array in variables so that we can use it in the views
-        foreach ($params as $key => $val) {
-            $$key = $val;
-        }
-
-        ob_start();
-        include_once Application::$ROOT_DIR . "/views/$view.php";
-        return ob_get_clean();
-    }
+//    /**
+//     * @param $view
+//     * @param array $params
+//     * @return string|string[]
+//     */
+//    public function renderView($view, $params = [])
+//    {
+//        $layoutContent = $this->layoutContent();
+//        $viewContent = $this->renderOnlyView($view, $params);
+//
+//        return str_replace('{{ content }}', $viewContent, $layoutContent);
+//    }
+//
+//    /**
+//     * @return bool|string
+//     */
+//    protected function layoutContent()
+//    {
+//        $layout = Application::$app->controller->layout;
+//
+//        ob_start();
+//        include_once Application::$ROOT_DIR . "/views/templates/$layout.php";
+//        return ob_get_clean();
+//    }
+//
+//    /**
+//     * @param $view
+//     * @param array $params
+//     * @return bool|string
+//     */
+//    protected function renderOnlyView($view, $params = [])
+//    {
+//        // this is a Variable Variable which transforms the associative array in variables so that we can use it in the views
+//        foreach ($params as $key => $val) {
+//            $$key = $val;
+//        }
+//
+//        ob_start();
+//        include_once Application::$ROOT_DIR . "/views/templates/$view.php";
+//        return ob_get_clean();
+//    }
 }
