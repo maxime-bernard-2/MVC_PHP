@@ -3,11 +3,21 @@
 class m0001_initial {
     public function up()
     {
-        echo "apply migration";
+        // Some SQL
+        /*
+        $db = \app\core\Application::$app->db;
+        $SQL = "CREATE TABLE test()";
+        $db->pdo->exec($SQL);
+        */
     }
 
     public function down()
     {
-        echo "down migration";
+        // Some SQL
+        /*
+        $db = \app\core\Application::$app->db;
+        $SQL = "DROP TABLE test()";
+        $db->pdo->exec($SQL);
+        */
     }
 }
