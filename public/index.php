@@ -5,7 +5,9 @@ $dotenv = Dotenv\Dotenv::createMutable(dirname(__DIR__));
 $dotenv->load();
 
 use app\controllers\ContactController;
+use app\controllers\DocumentationController;
 use app\controllers\HelloWorldController;
+use app\controllers\LandingController;
 use app\core\Application;
 
 $config = [
@@ -22,6 +24,7 @@ $app = new Application(dirname(__DIR__), $config);
 $app->router->get('/helloworld', [HelloWorldController::class, 'index']);
 $app->router->get('/contact', [ContactController::class, 'register']);
 $app->router->post('/contact', [ContactController::class, 'register']);
-$app->router->get('/welcome', [\app\controllers\LandingController::class, 'index']);
+$app->router->get('/welcome', [LandingController::class, 'index']);
+$app->router->get('/documentation', [DocumentationController::class, 'index']);
 
 $app->run();
