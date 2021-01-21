@@ -16,6 +16,17 @@ class Contact extends DBModel
     {
         return 'contact';
     }
+
+    public function attributes(): array
+    {
+        return ['firstname', 'lastname', 'email', 'password'];
+    }
+
+    public function register(): bool
+    {
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        return parent::save();
+    }
     
     public function rules() : array
     {
@@ -28,8 +39,5 @@ class Contact extends DBModel
         ];
     }
 
-    public function attributes(): array
-    {
-        return ['firstname', 'lastname', 'email', 'password'];
-    }
+
 }

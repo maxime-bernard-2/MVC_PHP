@@ -23,8 +23,8 @@ $app = new Application(dirname(__DIR__), $config);
 $app->router->get('/login', [UserController::class, 'loginPage']);
 $app->router->get('/login/check', [UserController::class, 'logUser']);
 $app->router->get('/helloworld', [HelloWorldController::class, 'index']);
-$app->router->get( '/phpinfos', function () {
-    return phpinfo();
-});
+$app->router->get('/contact', [ContactController::class, 'register']);
+$app->router->post('/contact', [ContactController::class, 'register']);
+$app->router->get('/welcome', [\app\controllers\LandingController::class, 'index']);
 
 $app->run();
