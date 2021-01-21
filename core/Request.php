@@ -11,7 +11,7 @@ use JetBrains\PhpStorm\Pure;
 class Request
 {
 
-    public function getPath()
+    #[Pure] public function getPath()
     {
         $path = $_SERVER['REQUEST_URI'] ?? '/';
         $pos = strpos($path, '?');
@@ -33,7 +33,7 @@ class Request
     /**
      * @return string
      */
-    public function method(): string
+    #[Pure] public function method(): string
     {
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
@@ -41,7 +41,7 @@ class Request
     /**
      * @return bool
      */
-    public function isPost(): bool
+    #[Pure] public function isPost(): bool
     {
         return $this->method() === 'post';
     }
@@ -49,7 +49,7 @@ class Request
     /**
      * @return array
      */
-    public function getBody(): array
+    #[Pure] public function getBody(): array
     {
         $body = [];
 
