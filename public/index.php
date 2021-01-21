@@ -15,5 +15,6 @@ $app = new Application(dirname(__DIR__));
 $app->router->get('/contact', [ContactController::class, 'index']);
 $app->router->post('/contact', [ContactController::class, 'handleContact']);
 $app->router->get('/login', [UserController::class, 'loginPage']);
+$app->router->get('/welcome', [\app\controllers\LandingController::class, 'index']);
 
 $app->run();
