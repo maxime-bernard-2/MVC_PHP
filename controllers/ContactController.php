@@ -36,7 +36,6 @@ class ContactController extends Controller
             if ($contactModel->validate() && $contactModel->register()) {
                 return "success";
             }
-            var_dump($contactModel->errors);
         }
 
        return $this->render('templates/contact.html.twig');
