@@ -3,6 +3,7 @@
 
 namespace app\controllers;
 
+use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
 
@@ -13,23 +14,25 @@ use app\core\Request;
 class UserController extends Controller
 {
 
-    /**
-     * @return array|string
-     */
     public function loginPage()
     {
-        return $this->render('login');
+        return $this->render('login.html.twig');
     }
 
     public function logUser() {
+        $pdo = Application::$app->db->pdo;
+
         if (isset($_GET['name'], $_GET['password'])) {
             $name = $_GET['name'];
             $password = $_GET['password'];
 
-            $sql = "SELECT * FROM user WHERE name=? AND password=?";
-            $stmt= $pdo->prepare($sql);
-            $stmt->execute([$name, password_hash($password, PASSWORD_BCRYPT)]);
+            $checkTable = $pdo->query("SELECT * FROM user WHERE name=". $name);
+            $result = $checkTable->fetch();
+
+            var_dump($result);
         }
+
+        return $this->render('login.html.twig');
     }
 
 }
