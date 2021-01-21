@@ -1,0 +1,16 @@
+{% extends 'templates/base.html.twig' %}
+
+
+{% block content %}
+    <h1>Contact form</h1>
+
+    <form method="post">
+            <input name="firstname"  placeholder="firstname">
+            <input name="lastname"  placeholder="lastname">
+            <input name="email" placeholder="email" type="email">
+            <input name="password"  placeholder="password">
+            <input name="confirmPassword"  placeholder="confirmPassword">
+
+        <input type="submit">
+    </form>
+{% endblock %}

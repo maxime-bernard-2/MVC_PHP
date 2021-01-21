@@ -2,9 +2,9 @@
 
 namespace app\models;
 
-use app\core\Model;
+use app\core\DBModel;
 
-class Contact extends Model
+class Contact extends DBModel
 {
     public string $firstname;
     public string $lastname;
@@ -12,6 +12,22 @@ class Contact extends Model
     public string $password;
     public string $confirmPassword;
 
+    public function tableName(): string
+    {
+        return 'contact';
+    }
+
+    public function attributes(): array
+    {
+        return ['firstname', 'lastname', 'email', 'password'];
+    }
+
+    public function register(): bool
+    {
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        return parent::save();
+    }
+    
     public function rules() : array
     {
         return [
@@ -22,4 +38,6 @@ class Contact extends Model
             'confirmPassword' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']]
         ];
     }
+
+
 }
