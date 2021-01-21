@@ -51,7 +51,7 @@ class Router
      * else it just returns 404
      * @return array|string
      */
-    public function resolve(): array|string
+    public function resolve()
     {
         $loader = new FilesystemLoader("../views");
         $twig = new Environment($loader);

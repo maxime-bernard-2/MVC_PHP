@@ -8,12 +8,12 @@ class m0001_initial {
         // Some SQL
         $db = Application::$app->db;
 
-        $SQL = "CREATE TABLE Persons (
-            PersonID int,
-            LastName varchar(255),
-            FirstName varchar(255),
-            Address varchar(255),
-            City varchar(255)
+        $SQL = "CREATE TABLE Contact (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            firstname varchar(255) NOT NULL,
+            lastname varchar(255) NOT NULL,
+            email varchar(255) NOT NULL,
+            password varchar(255) NOT NULL
         );";
 
         $db->pdo->exec($SQL);

@@ -20,12 +20,25 @@ class ContactController extends Controller
      */
     public function index(Request $req)
     {
-        $contact = new Contact();
+        return $this->render('templates/contact.html.twig');
+    }
 
-        if($req->isPost()) {
-            //...
+    public function register(Request $req)
+    {
+        $contactModel = new Contact();
+
+        if ($req->isPost()) {
+
+            var_dump($req->getBody());
+
+            $contactModel->loadData($req->getBody());
+
+            if ($contactModel->validate() && $contactModel->register()) {
+                return "success";
+            }
+            var_dump($contactModel->errors);
         }
 
-        return $this->render('contact');
+       return $this->render('templates/contact.html.twig');
     }
 }
