@@ -28,10 +28,14 @@ class Database
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-
-    public function applyMigrations()
+    /**
+     * This Applies the migrations found in migrations folder
+     */
+    public function applyMigrations(): void
     {
+        // First we create ihe migration table if it doesnt exists
         $this->createMigrationsTable();
+        // We fetch the applied migration to find the difference between applied and to apply migrations
         $appliedMigrations = $this->getAppliedMigrations();
 
         $files = scandir(Application::$ROOT_DIR.'/migrations');
@@ -45,12 +49,15 @@ class Database
                 continue;
             }
 
+            // Here we apply the the missing migrations
             require_once Application::$ROOT_DIR.'/migrations/'.$migration;
             $className = pathinfo($migration, PATHINFO_FILENAME);
 
             $instance = new $className();
             $this->log("Applying migration $migration . . .");
+            // we call the migration up & down functions
             $instance->up();
+            $instance->down();
             $this->log("Applied migration $migration");
             $newMigrations[] = $migration;
         }
@@ -62,8 +69,10 @@ class Database
         }
     }
 
-
-    public function createMigrationsTable()
+    /**
+     *  This creates the migration table
+     */
+    public function createMigrationsTable(): void
     {
         $this->pdo->exec("
             CREATE TABLE IF NOT EXISTS migrations (
@@ -74,16 +83,24 @@ class Database
        ");
     }
 
-
-    public function getAppliedMigrations()
+    /**
+     * Returns array of already applied migrations
+     * @return array
+     */
+    public function getAppliedMigrations(): array
     {
         $statement = $this->pdo->query("SELECT migration FROM migrations");
 
         return $statement->fetchAll(PDO::FETCH_COLUMN);
     }
 
-    public function saveMigrations(array $newMigrations)
+    /**
+     * Here we save the applied migrations in the migrations table
+     * @param array $newMigrations
+     */
+    public function saveMigrations(array $newMigrations): void
     {
+        // Only in php 7.4, We transform the array into a string that can be put in SQL format
         $valMigrations = implode(",", array_map(fn($m) => "('$m')", $newMigrations));
 
         $this->pdo->exec("INSERT INTO migrations (migration) VALUES 
@@ -91,7 +108,11 @@ class Database
         ");
     }
 
-    protected function log($message)
+    /**
+     * log format for terminal console
+     * @param $message
+     */
+    protected function log($message): void
     {
         echo '[' . date('Y-m-d H:i:s') . '] - ' . $message . PHP_EOL;
     }
