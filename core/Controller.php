@@ -29,7 +29,7 @@ class Controller
      * @param array $params
      * @return string
      */
-    public function render($view, $params = [])
+    public function render($view, $params = []): string
     {
         $loader = new FilesystemLoader("../views");
         $twig = new Environment($loader);
