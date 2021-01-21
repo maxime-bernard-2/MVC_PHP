@@ -10,7 +10,7 @@ services:
       MYSQL_USER: soul
       MYSQL_PASSWORD: soul_admin
     ports:
-      - "3306:3306"
+      - "3307:3306"
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
