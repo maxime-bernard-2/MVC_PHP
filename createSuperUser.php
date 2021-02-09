@@ -31,7 +31,7 @@ if (isset($argv[1], $argv[2])) {
     if ($checkTable) {
         $sql = "INSERT INTO user (name, password, role) VALUES (?,?,?)";
         $stmt= $pdo->prepare($sql);
-        $stmt->execute([$name, password_hash($password, PASSWORD_BCRYPT), 'ROLE_ADMIN']);
+        $stmt->execute([$name, password_hash($password, PASSWORD_DEFAULT), 'ROLE_ADMIN']);
     } else {
         echo 'Erreur: Table user non existante';
     }

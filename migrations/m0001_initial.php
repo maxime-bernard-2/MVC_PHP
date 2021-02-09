@@ -14,6 +14,13 @@ class m0001_initial {
             lastname varchar(255) NOT NULL,
             email varchar(255) NOT NULL,
             password varchar(255) NOT NULL
+        );
+        CREATE TABLE User (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name varchar(255) NOT NULL,
+            email varchar(255) NOT NULL,
+            password varchar(255) NOT NULL,
+            roles varchar(255) NOT NULL
         );";
 
         $db->pdo->exec($SQL);
