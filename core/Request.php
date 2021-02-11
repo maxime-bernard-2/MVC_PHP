@@ -2,8 +2,6 @@
 
 namespace app\core;
 
-use JetBrains\PhpStorm\Pure;
-
 /**
  * Class Request
  * @package core
@@ -11,7 +9,7 @@ use JetBrains\PhpStorm\Pure;
 class Request
 {
 
-    #[Pure] public function getPath()
+    public function getPath()
     {
         $path = $_SERVER['REQUEST_URI'] ?? '/';
         $pos = strpos($path, '?');
@@ -33,7 +31,7 @@ class Request
     /**
      * @return string
      */
-    #[Pure] public function method(): string
+    public function method(): string
     {
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
@@ -41,7 +39,7 @@ class Request
     /**
      * @return bool
      */
-    #[Pure] public function isPost(): bool
+    public function isPost(): bool
     {
         return $this->method() === 'post';
     }
@@ -49,7 +47,7 @@ class Request
     /**
      * @return array
      */
-    #[Pure] public function getBody(): array
+    public function getBody(): array
     {
         $body = [];
 

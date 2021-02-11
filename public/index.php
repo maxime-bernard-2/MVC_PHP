@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once __DIR__.'/../vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createMutable(dirname(__DIR__));
@@ -8,6 +9,7 @@ use app\controllers\ContactController;
 use app\controllers\DocumentationController;
 use app\controllers\HelloWorldController;
 use app\controllers\LandingController;
+use app\controllers\UserController;
 use app\core\Application;
 
 $config = [
@@ -21,10 +23,12 @@ $config = [
 $app = new Application(dirname(__DIR__), $config);
 
 /* Example of usage for routing */
+$app->router->get('/login', [UserController::class, 'loginPage']);
+$app->router->post('/login', [UserController::class, 'loginPage']);
 $app->router->get('/helloworld', [HelloWorldController::class, 'index']);
 $app->router->get('/contact', [ContactController::class, 'register']);
 $app->router->post('/contact', [ContactController::class, 'register']);
-$app->router->get('/welcome', [LandingController::class, 'index']);
+$app->router->get('/', [LandingController::class, 'index']);
 $app->router->get('/documentation', [DocumentationController::class, 'index']);
 
 $app->run();
