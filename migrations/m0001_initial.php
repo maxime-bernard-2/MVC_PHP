@@ -8,13 +8,7 @@ class m0001_initial {
         // Some SQL
         $db = Application::$app->db;
 
-        $SQL = "CREATE TABLE Contact (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            firstname varchar(255) NOT NULL,
-            lastname varchar(255) NOT NULL,
-            email varchar(255) NOT NULL,
-            password varchar(255) NOT NULL
-        );
+        $SQL = "
         CREATE TABLE User (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name varchar(255) NOT NULL,
