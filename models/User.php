@@ -26,12 +26,6 @@ class User extends DBModel
         return ['name', 'email', 'password', 'roles'];
     }
 
-    public function register(): bool
-    {
-        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
-        return parent::save();
-    }
-
     public function rules() : array
     {
         return [
