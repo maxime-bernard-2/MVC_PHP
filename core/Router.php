@@ -80,6 +80,14 @@ class Router
         return $callback($this->request);
     }
 
+    /**
+     * @param string $path
+     */
+    public function redirect(string $path): void
+    {
+        header('Location: ' . $path);
+    }
+
 //    /**
 //     * @param $view
 //     * @param array $params

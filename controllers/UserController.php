@@ -6,6 +6,7 @@ namespace app\controllers;
 use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
+use app\core\Router;
 
 /**
  * Class UserController
@@ -14,23 +15,33 @@ use app\core\Request;
 class UserController extends Controller
 {
 
-    public function loginPage()
-    {
-        return $this->render('login.html.twig');
-    }
+    public function loginPage(Request $request) {
+        if ($request->isPost()) {
+            $pdo = Application::$app->db->pdo;
 
-    public function logUser() {
-        $pdo = Application::$app->db->pdo;
+            if (isset($_POST['name'], $_POST['password'])) {
+                $post = $request->getBody();
 
-        if (isset($_POST['name'], $_POST['password'])) {
-            echo 'oui';
-            $name = $_POST['name'];
-            $password = $_POST['password'];
+                $stmt = $pdo->prepare("SELECT * FROM User WHERE name=?");
+                $stmt->execute(array($post['name']));
+                $result = $stmt->fetch();
 
-            $checkTable = $pdo->query("SELECT * FROM user WHERE name=". $name);
-            $result = $checkTable->fetch();
+                if (password_verify($post['password'], $result['password'])) {
+                    $_SESSION['user'] = array(
+                        'name' => $result['name'],
+                        'email' => $result['email'],
+                    );
 
-            var_dump($result);
+                    $this->redirect('/');
+                } else {
+                    return $this->render('templates/login.html.twig', array(
+                        'error' => 'Mot de passe ou Username invalide'
+                    ));
+                }
+
+            }
+        } else {
+            return $this->render('templates/login.html.twig');
         }
     }
 

@@ -36,4 +36,12 @@ class Controller
 
         return $twig->render($view, $params);
     }
+
+    /**
+     * @param string $path
+     */
+    public function redirect(string $path): void
+    {
+        Application::$app->router->redirect($path);
+    }
 }
