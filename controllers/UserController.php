@@ -22,17 +22,16 @@ class UserController extends Controller
     public function logUser() {
         $pdo = Application::$app->db->pdo;
 
-        if (isset($_GET['name'], $_GET['password'])) {
-            $name = $_GET['name'];
-            $password = $_GET['password'];
+        if (isset($_POST['name'], $_POST['password'])) {
+            echo 'oui';
+            $name = $_POST['name'];
+            $password = $_POST['password'];
 
             $checkTable = $pdo->query("SELECT * FROM user WHERE name=". $name);
             $result = $checkTable->fetch();
 
             var_dump($result);
         }
-
-        return $this->render('login.html.twig');
     }
 
 }
