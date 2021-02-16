@@ -1,0 +1,6 @@
+<ol>
+	<li><a href="index.html">Index</a></li>
+	{% for page in pages %}
+		<li><a href="{{ page|trim('.md') }}.html">{{ page }}</a></li>
+	{% endfor %}
+</ol>

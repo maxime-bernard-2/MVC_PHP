@@ -12,13 +12,13 @@ use app\core\Controller;
  */
 class HelloWorldController extends Controller
 {
-    /**
-     * @return array|string
-     */
-    public function index(): array|string
-    {
-        return $this->render('templates/helloworld.html.twig', array(
-            "name" => "Salut toi !"
-        ));
-    }
+	/**
+	 * @return array|string
+	 */
+	public function index(): array|string
+	{
+		return $this->render('templates/helloworld.html.twig', array(
+			"name" => "Salut toi !"
+		));
+	}
 }

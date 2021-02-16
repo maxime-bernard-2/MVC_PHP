@@ -1,37 +1,38 @@
 {
-    "name": "okharev/soul",
-    "description": "The 2020 - 2021 LP MVC Project made for the HotHotHot project in group 1",
-    "type": "project",
-    "authors": [
-        {
-            "name": "Pellan Florian",
-            "email": "florian.pellan@live.fr"
-        },
-        {
-            "name": "Bernard Maxime",
-            "email": "maxime.bernard13.pro@gmail.com"
-        },
-        {
-            "name": "Fillols Thomas",
-            "email": "thomas.fillols@etu.univ-amu.fr"
-        },
-        {
-            "name": "Autard Simon",
-            "email": "simon.autard@etu.univ-amu.fr"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "app\\": "./"
-        }
+  "name": "okharev/soul",
+  "description": "The 2020 - 2021 LP MVC Project made for the HotHotHot project in group 1",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Pellan Florian",
+      "email": "florian.pellan@live.fr"
     },
-    "require": {
-        "twig/twig": "^2.0",
-        "vlucas/phpdotenv": "^5.2"
+    {
+      "name": "Bernard Maxime",
+      "email": "maxime.bernard13.pro@gmail.com"
+    },
+    {
+      "name": "Fillols Thomas",
+      "email": "thomas.fillols@etu.univ-amu.fr"
+    },
+    {
+      "name": "Autard Simon",
+      "email": "simon.autard@etu.univ-amu.fr"
     }
-    ,
-    "require-dev": {
-        "roave/security-advisories": "dev-master",
-        "ext-ctype": "*"
+  ],
+  "autoload": {
+    "psr-4": {
+      "app\\": "./"
     }
+  },
+  "require": {
+    "twig/twig": "^2.0",
+    "vlucas/phpdotenv": "^5.2",
+    "ext-pdo": "*",
+    "erusev/parsedown": "^1.7"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master",
+    "ext-ctype": "*"
+  }
 }

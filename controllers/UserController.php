@@ -13,13 +13,13 @@ use app\core\Request;
 class UserController extends Controller
 {
 
-    /**
-     * @param Request $req
-     * @return array|string
-     */
-    public function loginPage(Request $req)
-    {
-        return $this->render('login');
-    }
+	/**
+	 * @param Request $req
+	 * @return array|string
+	 */
+	public function loginPage(Request $req)
+	{
+		return $this->render('login');
+	}
 
 }

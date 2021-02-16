@@ -2,13 +2,14 @@
 
 use app\core\Application;
 
-class m0001_initial {
-    public function up()
-    {
-        // Some SQL
-        $db = Application::$app->db;
+class m0001_initial
+{
+	public function up(): void
+	{
+		// Some SQL
+		$db = Application::$app->db;
 
-        $SQL = "CREATE TABLE Contact (
+		$SQL = "CREATE TABLE Contact (
             id INT AUTO_INCREMENT PRIMARY KEY,
             firstname varchar(255) NOT NULL,
             lastname varchar(255) NOT NULL,
@@ -16,16 +17,24 @@ class m0001_initial {
             password varchar(255) NOT NULL
         );";
 
-        $db->pdo->exec($SQL);
-    }
+		$SQL .= "CREATE TABLE IF NOT EXISTS HotHotHot (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                typed VARCHAR(255),
+                named VARCHAR(255),
+                valued FLOAT,
+                created_at INT
+            );";
 
-    public function down()
-    {
-        // Some SQL
-        /*
-        $db = \app\core\Application::$app->db;
-        $SQL = "DROP TABLE test()";
-        $db->pdo->exec($SQL);
-        */
-    }
+		$db->pdo->exec($SQL);
+	}
+
+	public function down()
+	{
+		// Some SQL
+		/*
+		$db = \app\core\Application::$app->db;
+		$SQL = "DROP TABLE test()";
+		$db->pdo->exec($SQL);
+		*/
+	}
 }

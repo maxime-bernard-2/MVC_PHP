@@ -11,59 +11,59 @@ use JetBrains\PhpStorm\Pure;
 class Request
 {
 
-    #[Pure] public function getPath()
-    {
-        $path = $_SERVER['REQUEST_URI'] ?? '/';
-        $pos = strpos($path, '?');
+	#[Pure] public function getPath()
+	{
+		$path = $_SERVER['REQUEST_URI'] ?? '/';
+		$pos = strpos($path, '?');
 
-        if ($pos === false) {
-            return $path;
-        }
-        return substr($path, 0, $pos);
-    }
+		if ($pos === false) {
+			return $path;
+		}
+		return substr($path, 0, $pos);
+	}
 
-    /**
-     * @return bool
-     */
-    public function isGet(): bool
-    {
-        return $this->method() === 'get';
-    }
+	/**
+	 * @return bool
+	 */
+	public function isGet(): bool
+	{
+		return $this->method() === 'get';
+	}
 
-    /**
-     * @return string
-     */
-    #[Pure] public function method(): string
-    {
-        return strtolower($_SERVER['REQUEST_METHOD']);
-    }
+	/**
+	 * @return string
+	 */
+	#[Pure] public function method(): string
+	{
+		return strtolower($_SERVER['REQUEST_METHOD']);
+	}
 
-    /**
-     * @return bool
-     */
-    #[Pure] public function isPost(): bool
-    {
-        return $this->method() === 'post';
-    }
+	/**
+	 * @return bool
+	 */
+	#[Pure] public function isPost(): bool
+	{
+		return $this->method() === 'post';
+	}
 
-    /**
-     * @return array
-     */
-    #[Pure] public function getBody(): array
-    {
-        $body = [];
+	/**
+	 * @return array
+	 */
+	#[Pure] public function getBody(): array
+	{
+		$body = [];
 
-        if ($this->method() === 'get') {
-            foreach ($_GET as $key => $value) {
-                $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
-            }
-        }
-        if ($this->method() === 'post') {
-            foreach ($_POST as $key => $value) {
-                $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
-            }
-        }
+		if ($this->method() === 'get') {
+			foreach ($_GET as $key => $value) {
+				$body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+			}
+		}
+		if ($this->method() === 'post') {
+			foreach ($_POST as $key => $value) {
+				$body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+			}
+		}
 
-        return $body;
-    }
+		return $body;
+	}
 }
