@@ -15,37 +15,36 @@ use app\core\Router;
 class UserController extends Controller
 {
 
-    public function loginPage(Request $request) {
+    public function loginPage(Request $request)
+    {
         if ($request->isPost()) {
             $pdo = Application::$app->db->pdo;
 
-            if (isset($_POST['name'], $_POST['password'])) {
-                $post = $request->getBody();
+            $post = $request->getBody();
 
-                $stmt = $pdo->prepare("SELECT * FROM User WHERE name=?");
-                $stmt->execute(array($post['name']));
-                $result = $stmt->fetch();
+            $stmt = $pdo->prepare("SELECT * FROM User WHERE name=?");
+            $stmt->execute(array($post['name']));
+            $result = $stmt->fetch();
 
-                if (password_verify($post['password'], $result['password'])) {
-                    $_SESSION['user'] = array(
-                        'name' => $result['name'],
-                        'email' => $result['email'],
-                    );
+            if (password_verify($post['password'], $result['password'])) {
+                $_SESSION['user'] = array(
+                    'name' => $result['name'],
+                    'email' => $result['email'],
+                );
 
-                    $this->redirect('/');
-                } else {
-                    return $this->render('templates/login.html.twig', array(
-                        'error' => 'Mot de passe ou Username invalide'
-                    ));
-                }
-
+                $this->redirect('/');
+            } else {
+                return $this->render('templates/login.html.twig', array(
+                    'error' => 'Mot de passe ou Username invalide'
+                ));
             }
         } else {
             return $this->render('templates/login.html.twig');
         }
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         session_unset();
 
         $this->redirect('/admin');
