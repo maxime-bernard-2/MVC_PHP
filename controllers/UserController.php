@@ -45,4 +45,10 @@ class UserController extends Controller
         }
     }
 
+    public function logout(Request $request) {
+        session_unset();
+
+        $this->redirect('/admin');
+    }
+
 }
