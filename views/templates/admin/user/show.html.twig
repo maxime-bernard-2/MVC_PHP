@@ -1,0 +1,55 @@
+{% extends 'templates/base.html.twig' %}
+
+{% use 'templates/admin/sidebar.html.twig' %}
+
+{% block content %}
+    <div class="md:ml-64 md:p-4 flex-auto justify-center">
+
+        <table class="border-collapse w-full">
+            <thead>
+            <tr>
+                <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Name</th>
+                <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Email</th>
+                <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Role</th>
+                <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+
+                    <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                        <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                            <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Company name</span>
+                            {{ user.name }}
+                        </td>
+                        <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                            <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Country</span>
+                            {{ user.email }}
+                        </td>
+                        {% if user.roles == 'ROLE_ADMIN' %}
+                            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Status</span>
+                                <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold">Admin</span>
+                            </td>
+                        {% else %}
+                            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Status</span>
+                                <span class="rounded bg-red-400 py-1 px-3 text-xs font-bold">User</span>
+                            </td>
+                        {% endif %}
+
+                        <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                            <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
+                            <a href="/admin/user/edit?id={{ user.id }}" class="text-blue-400 hover:text-blue-600 underline">Edit</a>
+                            <a href="/admin/user/remove?id={{ user.id }}" class="text-blue-400 hover:text-blue-600 underline pl-6">Remove</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/admin/user/add"
+                class="w-full mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Ajouter +
+        </a>
+    </div>
+{% endblock %}

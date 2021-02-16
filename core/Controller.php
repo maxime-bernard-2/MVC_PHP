@@ -44,4 +44,22 @@ class Controller
     {
         Application::$app->router->redirect($path);
     }
+
+    public function adminCheck(): bool
+    {
+        $pdo = Application::$app->db->pdo;
+        if(isset($_SESSION['user'])) {
+            $stmt = $pdo->prepare("SELECT * FROM User WHERE name=?");
+            $stmt->execute(array($_SESSION['user']['name']));
+            $result = $stmt->fetch();
+
+            if($result['roles'] === 'ROLE_ADMIN') {
+                return true;
+            } else {
+                $this->redirect('/login');
+            }
+        } else {
+            $this->redirect('/login');
+        }
+    }
 }
