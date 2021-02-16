@@ -12,11 +12,11 @@ use app\controllers\UserController;
 use app\core\Application;
 
 $config = [
-    'db' => [
-        'dsn' => "mysql:host={$_ENV['DATABASE_HOST']};dbname={$_ENV['DATABASE_NAME']};port={$_ENV['DATABASE_PORT']}",
-        'user' => $_ENV['DATABASE_USER'],
-        'password' => $_ENV['DATABASE_PASSWORD'],
-    ]
+	'db' => [
+		'dsn' => "mysql:host={$_ENV['DATABASE_HOST']};dbname={$_ENV['DATABASE_NAME']};port={$_ENV['DATABASE_PORT']}",
+		'user' => $_ENV['DATABASE_USER'],
+		'password' => $_ENV['DATABASE_PASSWORD'],
+	]
 ];
 
 $app = new Application(dirname(__DIR__), $config);

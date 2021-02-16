@@ -7,12 +7,13 @@ use app\models\Documentation;
 
 class DocumentationController extends Controller
 {
-    public function index() {
+	public function index()
+	{
 
-        $documentation = new Documentation();
+		$documentation = new Documentation();
 
-        return $this->render('docs/documentation.html.twig', array(
-            'test' => 'Une phrase de test'
-        ));
-    }
+		return $this->render('docs/documentation.html.twig', array(
+			'test' => 'Une phrase de test'
+		));
+	}
 }
