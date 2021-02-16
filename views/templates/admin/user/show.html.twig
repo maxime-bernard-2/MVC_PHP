@@ -3,9 +3,7 @@
 {% use 'templates/admin/sidebar.html.twig' %}
 
 {% block content %}
-    <div class="md:ml-64 md:p-4">
-
-        <h1>Users ...</h1>
+    <div class="md:ml-64 md:p-4 flex-auto justify-center">
 
         <table class="border-collapse w-full">
             <thead>
@@ -42,13 +40,16 @@
 
                         <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
                             <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
-                            <a href="#" class="text-blue-400 hover:text-blue-600 underline">Edit</a>
+                            <a href="/admin/user/edit?id={{ user.id }}" class="text-blue-400 hover:text-blue-600 underline">Edit</a>
                             <a href="/admin/user/remove?id={{ user.id }}" class="text-blue-400 hover:text-blue-600 underline pl-6">Remove</a>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-
+        <a href="/admin/user/add"
+                class="w-full mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Ajouter +
+        </a>
     </div>
 {% endblock %}

@@ -28,6 +28,10 @@ $app->router->post('/login', [UserController::class, 'loginPage']);
 $app->router->get('/admin', [AdminController::class, 'dashboard']);
 $app->router->get('/admin/user', [AdminController::class, 'userShow']);
 $app->router->get('/admin/user/remove', [AdminController::class, 'userRemove']);
+$app->router->get('/admin/user/edit', [AdminController::class, 'userEdit']);
+$app->router->post('/admin/user/edit/send', [AdminController::class, 'userEditSend']);
+$app->router->get('/admin/user/add', [AdminController::class, 'userAdd']);
+$app->router->post('/admin/user/add/send', [AdminController::class, 'userAddSend']);
 $app->router->get('/documentation', [DocumentationController::class, 'index']);
 
 $app->run();

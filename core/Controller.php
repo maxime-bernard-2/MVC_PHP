@@ -56,7 +56,7 @@ class Controller
             if($result['roles'] === 'ROLE_ADMIN') {
                 return true;
             } else {
-                return false;
+                $this->redirect('/login');
             }
         } else {
             $this->redirect('/login');
