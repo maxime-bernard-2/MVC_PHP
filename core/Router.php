@@ -58,6 +58,7 @@ class Router
 	{
 		$loader = new FilesystemLoader("../views");
 		$twig = new Environment($loader);
+        $twig->addGlobal('session', $_SESSION);
 
 		$path = $this->request->getPath();
 		$method = $this->request->method();

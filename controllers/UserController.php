@@ -7,6 +7,7 @@ use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
 use app\core\Router;
+use app\models\User;
 
 /**
  * Class UserController
@@ -19,7 +20,6 @@ class UserController extends Controller
     {
         if ($request->isPost()) {
             $pdo = Application::$app->db->pdo;
-
             $post = $request->getBody();
 
             $stmt = $pdo->prepare("SELECT * FROM User WHERE name=?");
@@ -27,10 +27,16 @@ class UserController extends Controller
             $result = $stmt->fetch();
 
             if (password_verify($post['password'], $result['password'])) {
-                $_SESSION['user'] = array(
-                    'name' => $result['name'],
-                    'email' => $result['email'],
-                );
+                $user = new User();
+                $user->setName($result['name']);
+                $user->setEmail($result['email']);
+                $user->setRole($result['roles']);
+
+                $user->connectionNumberUpdate();
+                $user->lastConnectionUpdate();
+
+
+                $_SESSION['user'] = get_object_vars($user);
 
                 $this->redirect('/');
             } else {

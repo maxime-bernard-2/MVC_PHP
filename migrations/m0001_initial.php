@@ -15,16 +15,10 @@ class m0001_initial
             name varchar(255) NOT NULL,
             email varchar(255) NOT NULL,
             password varchar(255) NOT NULL,
-            roles varchar(255) NOT NULL
+            roles varchar(255) NOT NULL,
+            connection_number INT DEFAULT 0,
+            last_connection DATETIME
         );";
-
-		$SQL .= "CREATE TABLE IF NOT EXISTS HotHotHot (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                typed VARCHAR(255),
-                named VARCHAR(255),
-                valued FLOAT,
-                created_at INT
-            );";
 
 		$db->pdo->exec($SQL);
 	}

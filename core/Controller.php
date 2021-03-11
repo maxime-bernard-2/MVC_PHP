@@ -4,6 +4,7 @@
 namespace app\core;
 
 use Twig\Environment;
+use Twig\Extension\DebugExtension;
 use Twig\Extra\Markdown\DefaultMarkdown;
 use Twig\Extra\Markdown\MarkdownExtension;
 use Twig\Extra\Markdown\MarkdownRuntime;
@@ -40,7 +41,11 @@ class Controller
 	public function render($view, $params = []): string
 	{
 		$loader = new FilesystemLoader("../views");
-		$twig = new Environment($loader);
+        $twig = new Environment($loader,  [
+            'debug' => true,
+        ]);
+        $twig->addGlobal('session', $_SESSION);
+        $twig->addExtension(new DebugExtension());
 		$twig->addExtension(new MarkdownExtension());
 
 		$twig->addRuntimeLoader(new class implements RuntimeLoaderInterface {
