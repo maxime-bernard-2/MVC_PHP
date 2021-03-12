@@ -310,9 +310,37 @@
 <h1>HotHotHot !</h1>
 <p>GroupMaker est une application web conçue en PHP qui a pour but de faire des groupes de personnes aléatoirement. Le site
 est en ligne et est disponible à cette adresse: <a href="https://groupmaker.maximebernard-etu.fr">https://groupmaker.maximebernard-etu.fr</a></p>
-<h2>TEST 2</h2>
+<h2>Installation</h2>
 <p>J&#039;ai mis en place des images Docker pour faciliter l&#039;installation sur de nouvelles machines sans plus de configurations.
 Cela inclut une base de données MYSQL avec PhpMyAdmin et un serveur composé de PHP 8.0 et Apache.</p>
+<h3>Docker</h3>
+<p>Installer <a href="https://www.docker.com/products/docker-desktop">Docker Desktop</a> et ne pas oublier de le lancer une fois
+l&#039;installation terminée.</p>
+<blockquote>
+<p>Si vous n&#039;êtes pas familier avec Docker, je vous conseille ces vidéos:</p>
+<ol>
+<li>Bases de Docker: <a href="https://www.youtube.com/watch?v=SXB6KJ4u5vg">https://www.youtube.com/watch?v=SXB6KJ4u5vg</a></li>
+<li>Créer une image Docker : <a href="https://www.youtube.com/watch?v=cWkmqZPWwiw">https://www.youtube.com/watch?v=cWkmqZPWwiw</a></li>
+<li>Utiliser Docker compose : <a href="https://www.youtube.com/watch?v=dWcoIxRfs8Y">https://www.youtube.com/watch?v=dWcoIxRfs8Y</a></li>
+</ol>
+</blockquote>
+<h3>Lancer l&#039;application</h3>
+<blockquote>
+<p>⚠️ <strong>Attention</strong> : fermez WAMP ou tout autres logiciel utilisant le port 80, 8080 ou 3306!</p>
+</blockquote>
+<p>Pour lancer l&#039;application, il vous faudra taper ces commandes dans le répertoire où se trouve &#039;docker-compose.yml&#039;:</p>
+<pre><code class="language-bash">docker-compose build</code></pre>
+<pre><code class="language-python">print("hello")</code></pre>
+<h3>Utilisation</h3>
+<p>L &#039;application se trouve sur <a href="http://localhost:80">le port 80</a>. Pour accéder directement à la base de données, cela se
+passe sur <a href="http://localhost:3306">le port 3306</a>. Pour accéder à la base de données avec PhpMyAdmin, il faut vous rendre
+sur <a href="http://localhost:8080">le port 8080</a>.</p>
+<p>L &#039;application ne marche qu&#039;avec un type de fichier qui est le XLSX. Pour que tout marche, veuillez utiliser
+ce <a href="https://drive.google.com/file/d/1yrEBeDg6ypIsj1i8ccbXeVn_YEbebCZF/view?usp=sharing">template</a></p>
+<blockquote>
+<p>Il se trouve aussi à la racine du projet sous le nom de list.xlsx</p>
+</blockquote>
+<p>test</p>
 
 </body>
 </html>
