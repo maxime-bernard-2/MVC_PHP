@@ -25,6 +25,8 @@ $app = new Application(dirname(__DIR__), $config);
 $app->router->get('/', [LandingController::class, 'index']);
 $app->router->get('/login', [UserController::class, 'loginPage']);
 $app->router->post('/login', [UserController::class, 'loginPage']);
+$app->router->get('/signup', [UserController::class, 'signupPage']);
+$app->router->post('/signup', [UserController::class, 'signupPage']);
 $app->router->get('/logout', [UserController::class, 'logout']);
 $app->router->get('/admin', [AdminController::class, 'dashboard']);
 $app->router->get('/admin/user', [AdminController::class, 'userShow']);
