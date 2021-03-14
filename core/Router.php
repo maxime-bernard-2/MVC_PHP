@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace app\core;
 
 use Twig\Environment;
@@ -14,78 +16,78 @@ use Twig\Loader\FilesystemLoader;
  */
 class Router
 {
-	public Request $request;
-	public Response $response;
+    public Request $request;
+    public Response $response;
 
-	protected array $routes = [];
+    protected array $routes = [];
 
 
-	/**
-	 * Router constructor.
-	 * @param Request $request
-	 * @param Response $response
-	 */
-	public function __construct(Request $request, Response $response)
-	{
-		$this->request = $request;
-		$this->response = $response;
-	}
+    /**
+     * Router constructor.
+     * @param Request $request
+     * @param Response $response
+     */
+    public function __construct(Request $request, Response $response)
+    {
+        $this->request = $request;
+        $this->response = $response;
+    }
 
-	/**
-	 * @param string $path
-	 * @param $callback
-	 */
-	public function get(string $path, $callback): void
-	{
-		$this->routes['get'][$path] = $callback;
-	}
+    /**
+     * @param string $path
+     * @param $callback
+     */
+    public function get(string $path, $callback): void
+    {
+        $this->routes['get'][$path] = $callback;
+    }
 
-	/**
-	 * @param string $path
-	 * @param $callback
-	 */
-	public function post(string $path, $callback): void
-	{
-		$this->routes['post'][$path] = $callback;
-	}
+    /**
+     * @param string $path
+     * @param $callback
+     */
+    public function post(string $path, $callback): void
+    {
+        $this->routes['post'][$path] = $callback;
+    }
 
-	/**
-	 * resolve this route method and path checks its existence and returns the callback function
-	 * else it just returns 404
-	 * @return array|string
-	 */
-	public function resolve(): array|string
-	{
-		$loader = new FilesystemLoader("../views");
-		$twig = new Environment($loader);
+    /**
+     * resolve this route method and path checks its existence and returns the callback function
+     * else it just returns 404
+     * @return array|string
+     */
+    public function resolve(): array | string
+    {
+        $loader = new FilesystemLoader("../views");
+        $twig = new Environment($loader);
         $twig->addGlobal('session', $_SESSION);
 
-		$path = $this->request->getPath();
-		$method = $this->request->method();
+        $path = $this->request->getPath();
+        $method = $this->request->method();
 
-		$callback = $this->routes[$method][$path] ?? false;
+        $callback = $this->routes[$method][$path] ?? false;
 
-		if ($callback === false) {
-			$this->response->setStatusCode(404);
-			try {
-				return $twig->render("/errors/_404.html.twig");
-			} catch (LoaderError | RuntimeError | SyntaxError $e) {
-			}
-		}
+        if ($callback === false) {
+            $this->response->setStatusCode(404);
+            try {
+                return $twig->render("/errors/_404.html.twig");
+            } catch (LoaderError | RuntimeError | SyntaxError $e) {
+            }
+        }
 
-		// if it is a string then we render a the view corresponding to the string
-		if (is_string($callback)) {
-			return $twig->render($callback);
-		}
+        // if it is a string then we render a the view corresponding to the string
+        if (is_string($callback)) {
+            return $twig->render($callback);
+        }
 
-		// if it is an array we instantiate the controller
-		if (is_array($callback)) {
-			Application::$app->controller = new $callback[0]();
-			$callback[0] = Application::$app->controller;
-		}
+        // if it is an array we instantiate the controller
+        if (is_array($callback)) {
+            Application::$app->controller = new $callback[0]();
+            $callback[0] = Application::$app->controller;
+        }
 
-		return $callback($this->request);
-	}
+        return $callback($this->request);
+    }
 
     /**
      * @param string $path
@@ -127,7 +129,8 @@ class Router
 //     */
 //    protected function renderOnlyView($view, $params = [])
 //    {
-//        // this is a Variable Variable which transforms the associative array in variables so that we can use it in the views
+//        // this is a Variable Variable which transforms the associative array in variables
+        // so that we can use it in the views
 //        foreach ($params as $key => $val) {
 //            $$key = $val;
 //        }

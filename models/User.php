@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace app\models;
 
@@ -27,7 +28,7 @@ class User extends DBModel
         return ['name', 'email', 'password', 'roles'];
     }
 
-    public function rules() : array
+    public function rules(): array
     {
         return [
             'name' => [self::RULE_REQUIRED],
@@ -90,7 +91,7 @@ class User extends DBModel
     {
         $pdo = Application::$app->db->pdo;
         $sql = "UPDATE User SET connection_number=connection_number + 1 WHERE email=?";
-        $stmt= $pdo->prepare($sql);
+        $stmt = $pdo->prepare($sql);
         $stmt->execute([$this->email]);
     }
 
@@ -102,8 +103,7 @@ class User extends DBModel
         $pdo = Application::$app->db->pdo;
         $date = new \DateTime('NOW');
         $sql = "UPDATE User SET last_connection=? WHERE email=?";
-        $stmt= $pdo->prepare($sql);
+        $stmt = $pdo->prepare($sql);
         $stmt->execute([$date->format('Y-m-d H:i:s'),$this->email]);
-
     }
 }

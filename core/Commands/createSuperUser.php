@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Script to generate an admin user
  * use: php createSuperUser.php username password
  */
+
+declare(strict_types=1);
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
@@ -31,7 +34,7 @@ if (isset($argv[1], $argv[2], $argv[3])) {
     $checkTable = $pdo->query("SELECT 1 FROM User");
     if ($checkTable) {
         $sql = "INSERT INTO User (name,email, password, roles) VALUES (?,?,?,?)";
-        $stmt= $pdo->prepare($sql);
+        $stmt = $pdo->prepare($sql);
         $stmt->execute([$name,$email, password_hash($password, PASSWORD_DEFAULT), 'ROLE_ADMIN']);
     } else {
         echo 'Erreur: Table user non existante';
@@ -39,5 +42,3 @@ if (isset($argv[1], $argv[2], $argv[3])) {
 } else {
     echo 'ERREUR';
 }
-
-

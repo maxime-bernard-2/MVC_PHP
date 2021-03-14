@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace app\controllers;
 
@@ -68,7 +69,7 @@ class UserController extends Controller
 
                         if (!$result) {
                             $sql = "INSERT INTO User (name,email, password, roles) VALUES (?,?,?,?)";
-                            $stmt= $pdo->prepare($sql);
+                            $stmt = $pdo->prepare($sql);
                             $stmt->execute([$post['name'],$post['email'], password_hash($post['password'], PASSWORD_DEFAULT), 'ROLE_USER']);
 
                             $this->redirect('/login');
@@ -82,7 +83,6 @@ class UserController extends Controller
                             'error' => 'Username already used'
                         ));
                     }
-
                 } else {
                     return $this->render('templates/signup.html.twig', array(
                         'error' => 'Email not valid'
@@ -104,5 +104,4 @@ class UserController extends Controller
 
         $this->redirect('/admin');
     }
-
 }

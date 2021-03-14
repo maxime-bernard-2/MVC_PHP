@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace app\core;
 
@@ -10,7 +11,6 @@ use Twig\Extra\Markdown\MarkdownExtension;
 use Twig\Extra\Markdown\MarkdownRuntime;
 use Twig\Loader\FilesystemLoader;
 use Twig\RuntimeLoader\RuntimeLoaderInterface;
-
 
 /**
  * Class Controller
@@ -30,32 +30,32 @@ class Controller
 //        $this->layout = $layout;
 //    }
 
-	/**
-	 * @param $view
-	 * @param array $params
-	 * @return string
-	 * @throws \Twig\Error\LoaderError
-	 * @throws \Twig\Error\RuntimeError
-	 * @throws \Twig\Error\SyntaxError
-	 */
-	public function render($view, $params = []): string
-	{
-		$loader = new FilesystemLoader("../views");
-        $twig = new Environment($loader,  [
+    /**
+     * @param $view
+     * @param array $params
+     * @return string
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
+    public function render($view, $params = []): string
+    {
+        $loader = new FilesystemLoader("../views");
+        $twig = new Environment($loader, [
             'debug' => true,
         ]);
         $twig->addGlobal('session', $_SESSION);
         $twig->addExtension(new DebugExtension());
-		$twig->addExtension(new MarkdownExtension());
+        $twig->addExtension(new MarkdownExtension());
 
-		$twig->addRuntimeLoader(new class implements RuntimeLoaderInterface {
-			public function load($class): MarkdownRuntime
-			{
-				if (MarkdownRuntime::class === $class) {
-					return new MarkdownRuntime(new DefaultMarkdown());
-				}
-			}
-		});
+        $twig->addRuntimeLoader(new class implements RuntimeLoaderInterface {
+            public function load($class): MarkdownRuntime
+            {
+                if (MarkdownRuntime::class === $class) {
+                    return new MarkdownRuntime(new DefaultMarkdown());
+                }
+            }
+        });
 
         return $twig->render($view, $params);
     }
@@ -71,12 +71,12 @@ class Controller
     public function adminCheck(): bool
     {
         $pdo = Application::$app->db->pdo;
-        if(isset($_SESSION['user'])) {
+        if (isset($_SESSION['user'])) {
             $stmt = $pdo->prepare("SELECT * FROM User WHERE name=?");
             $stmt->execute(array($_SESSION['user']['name']));
             $result = $stmt->fetch();
 
-            if($result['roles'] === 'ROLE_ADMIN') {
+            if ($result['roles'] === 'ROLE_ADMIN') {
                 return true;
             } else {
                 $this->redirect('/login');

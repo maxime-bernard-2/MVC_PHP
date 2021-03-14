@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Twig\Environment;
@@ -21,17 +23,14 @@ file_put_contents(__DIR__ . '/public/docs/index.html', $index);
 echo "BUILT index.html" . PHP_EOL;
 
 foreach ($contentFiles as $file) {
+    $data["HTML"] = $parsed->parse(file_get_contents($contentDir . '/' . $file));
 
-	$data["HTML"] = $parsed->parse(file_get_contents($contentDir . '/' . $file));
+    $contentBase = $twig->render('base.html.twig', $data);
 
-	$contentBase = $twig->render('base.html.twig', $data);
+    $outputDir = __DIR__ . '/public/docs';
 
-	$outputDir = __DIR__ . '/public/docs';
+    $outputPath = $outputDir . '/' . basename($file, '.md') . '.html';
+    file_put_contents($outputPath, html_entity_decode($contentBase));
 
-	$outputPath = $outputDir . '/' . basename($file, '.md') . '.html';
-	file_put_contents($outputPath, html_entity_decode($contentBase));
-
-	echo "BUILT " . $file . PHP_EOL;
+    echo "BUILT " . $file . PHP_EOL;
 }
-
-
