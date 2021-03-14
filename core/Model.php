@@ -19,13 +19,23 @@ abstract class Model
      * Here we check the given ($_POST) data and associate it with the model property if they exists
      * @param $data
      */
-    public function loadData($data): void
+    public function loadData(array $data): void
     {
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
                 $this->{$key} = $value;
             }
         }
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return array
+     */
+    public function attributes(): array
+    {
+        return [];
     }
 
     /**
@@ -71,7 +81,7 @@ abstract class Model
      * @param string $rule
      * @param array $params
      */
-    private function addError(string $attrib, string $rule, $params = []): void
+    private function addError(string $attrib, string $rule, array $params = []): void
     {
         $message = $this->errorMessages()[$rule] ?? '';
 
