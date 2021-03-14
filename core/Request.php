@@ -11,7 +11,7 @@ namespace app\core;
 class Request
 {
 
-    public function getPath()
+    public function getPath(): string
     {
         $path = $_SERVER['REQUEST_URI'] ?? '/';
         $pos = strpos($path, '?');

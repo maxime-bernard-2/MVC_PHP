@@ -15,7 +15,8 @@ class Database
     public PDO $pdo;
 
     /**
-     * Database constructor.
+     * Undocumented function
+     *
      * @param array $config
      */
     public function __construct(array $config)
@@ -31,7 +32,9 @@ class Database
     }
 
     /**
-     * This Applies the migrations found in migrations folder
+     * Undocumented function
+     *
+     * @return void
      */
     public function applyMigrations(): void
     {
@@ -72,7 +75,9 @@ class Database
     }
 
     /**
-     *  This creates the migration table
+     * Undocumented function
+     *
+     * @return void
      */
     public function createMigrationsTable(): void
     {
@@ -111,10 +116,21 @@ class Database
     }
 
     /**
+     * Undocumented function
+     *
+     * @param string $sql
+     * @return \PDOStatement
+     */
+    public function prepare(string $sql): \PDOStatement
+    {
+        return $this->pdo->prepare($sql);
+    }
+
+    /**
      * log format for terminal console
      * @param $message
      */
-    protected function log($message): void
+    protected function log(string $message): void
     {
         echo '[' . date('Y-m-d H:i:s') . '] - ' . $message . PHP_EOL;
     }

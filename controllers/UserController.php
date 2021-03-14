@@ -19,6 +19,8 @@ class UserController extends Controller
 
     public function loginPage(Request $request)
     {
+        $user = User::selectWhere(['email' => 'florian.pellan@liv.fr'], ["name"]);
+
         if ($request->isPost()) {
             $pdo = Application::$app->db->pdo;
             $post = $request->getBody();

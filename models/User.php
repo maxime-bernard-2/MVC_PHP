@@ -18,7 +18,7 @@ class User extends DBModel
     public string $email;
     public string $role;
 
-    public function tableName(): string
+    public static function tableName(): string
     {
         return 'User';
     }
