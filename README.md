@@ -1,3 +1,5 @@
+[DISCLAIMER : La documentation du framework est en cours d'écriture. elle sera mise en ligne demain matin. Nous nous excusons pour la gêne occasionnée. Pour toute information complémentaire, veuillez contacter l'un des membres du groupe par mail.]
+
 # HotHotHot !
 
 GroupMaker est une application web conçue en PHP qui a pour but de faire des groupes de personnes aléatoirement. Le site
