@@ -1,8 +1,8 @@
 <?php
 
-declare (strict_types=1);
+declare (strict_types = 1);
 
-namespace app\core\form;
+namespace app\core\forms;
 
 use app\core\Model;
 
@@ -12,9 +12,9 @@ use app\core\Model;
 abstract class BaseField
 {
 
-    public Model $model;
-    public string $attribute;
-    public string $type;
+    public $model;
+    public $attribute;
+    public $type;
 
     /**
      * Undocumented function

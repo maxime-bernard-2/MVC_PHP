@@ -105,7 +105,7 @@ class Model
         return $this->errorMessages()[$rule];
     }
 
-    protected function addErrorByRule(string $attribute, string $rule, $params = []): void
+    protected function addErrorByRule($attribute, $rule, $params = []): void
     {
         $params['field'] ??= $attribute;
         $errorMessage = $this->errorMessage($rule);
@@ -120,12 +120,12 @@ class Model
         $this->errors[$attribute][] = $message;
     }
 
-    public function hasError($attribute): string|bool
+    public function hasError($attribute)
     {
         return $this->errors[$attribute] ?? false;
     }
 
-    public function getFirstError($attribute): string
+    public function getFirstError($attribute)
     {
         $errors = $this->errors[$attribute] ?? [];
         return $errors[0] ?? '';

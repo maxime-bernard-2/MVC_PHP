@@ -16,7 +16,7 @@ abstract class DBModel extends Model
      *
      * @return string
      */
-    public function primaryKey(): string
+    public static function primaryKey(): string
     {
         return 'id';
     }
@@ -62,7 +62,7 @@ abstract class DBModel extends Model
      * @param array $where
      * @return Model
      */
-    public static function selectWhere(array $where, array $select = []): Model
+    public static function selectWhere(array $where, array $select = [])
     {
         $tableName = static::tableName();
         $where_statements = array_keys($where);
@@ -71,6 +71,55 @@ abstract class DBModel extends Model
         $where_sql = implode("AND", array_map(fn($attr) => "$attr = :$attr", $where_statements));
 
         $statement = self::prepare("SELECT $select_sql FROM $tableName WHERE $where_sql");
+
+        foreach ($where as $key => $item) {
+            $statement->bindValue("$key", $item);
+        }
+
+        $statement->execute();
+        return $statement->fetchObject(static::class);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param array $where
+     * @param array $select
+     * @return void
+     */
+    public static function updateWhere(array $where, array $select = [])
+    {
+        $tableName = static::tableName();
+        $where_statements = array_keys($where);
+
+        $select_sql = implode(",", array_map(fn($attr) => "$attr = :$attr", $where_statements));
+        $where_sql = implode("AND", array_map(fn($attr) => "$attr = :$attr", $where_statements));
+
+        $statement = self::prepare("UPDATE $tableName SET $select_sql WHERE $where_sql");
+
+        foreach ($where as $key => $item) {
+            $statement->bindValue("$key", $item);
+        }
+
+        $statement->execute();
+        return $statement->fetchObject(static::class);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param array $where
+     * @param array $select
+     * @return void
+     */
+    public static function deleteWhere(array $where)
+    {
+        $tableName = static::tableName();
+        $where_statements = array_keys($where);
+
+        $where_sql = implode("AND", array_map(fn($attr) => "$attr = :$attr", $where_statements));
+
+        $statement = self::prepare("DELETE FROM $tableName WHERE $where_sql");
 
         foreach ($where as $key => $item) {
             $statement->bindValue("$key", $item);

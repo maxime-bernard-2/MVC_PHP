@@ -17,4 +17,15 @@ class Response
     {
         http_response_code($code);
     }
+
+    /**
+     * Undocumented function
+     *
+     * @param string $url
+     * @return void
+     */
+    public function redirect(string $url)
+    {
+        header("Location: $url");
+    }
 }

@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace app\core;
 
-use Twig\Environment;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
-use Twig\Loader\FilesystemLoader;
+use Exception;
 
 /**
  * Class Router
@@ -56,87 +52,40 @@ class Router
      * else it just returns 404
      * @return array|string
      */
-    public function resolve(): array | string
+    public function resolve()
     {
-        $loader = new FilesystemLoader("../views");
-        $twig = new Environment($loader);
-        $twig->addGlobal('session', $_SESSION);
-
-        $path = $this->request->getPath();
         $method = $this->request->method();
-
-        $callback = $this->routes[$method][$path] ?? false;
-
-        if ($callback === false) {
-            $this->response->setStatusCode(404);
-            try {
-                return $twig->render("/errors/_404.html.twig");
-            } catch (LoaderError | RuntimeError | SyntaxError $e) {
-            }
+        $url = $this->request->getPath();
+        $callback = $this->routes[$method][$url] ?? false;
+        if (!$callback) {
+            throw new Exception();
         }
-
-        // if it is a string then we render a the view corresponding to the string
         if (is_string($callback)) {
-            return $twig->render($callback);
+            return $this->renderView($callback);
         }
-
-        // if it is an array we instantiate the controller
         if (is_array($callback)) {
-            Application::$app->controller = new $callback[0]();
-            $callback[0] = Application::$app->controller;
+            /**
+             * @var $controller \thecodeholic\phpmvc\Controller
+             */
+            $controller = new $callback[0];
+            $controller->action = $callback[1];
+            Application::$app->controller = $controller;
+            $middlewares = $controller->getMiddlewares();
+            foreach ($middlewares as $middleware) {
+                $middleware->execute();
+            }
+            $callback[0] = $controller;
         }
-
-        return $callback($this->request);
+        return call_user_func($callback, $this->request, $this->response);
     }
 
-    /**
-     * @param string $path
-     */
-    public function redirect(string $path): void
+    public function renderView($view, $params = [])
     {
-        header('Location: ' . $path);
+        return Application::$app->view->renderView($view, $params);
     }
 
-//    /**
-//     * @param $view
-//     * @param array $params
-//     * @return string|string[]
-//     */
-//    public function renderView($view, $params = [])
-//    {
-//        $layoutContent = $this->layoutContent();
-//        $viewContent = $this->renderOnlyView($view, $params);
-//
-//        return str_replace('{{ content }}', $viewContent, $layoutContent);
-//    }
-//
-//    /**
-//     * @return bool|string
-//     */
-//    protected function layoutContent()
-//    {
-//        $layout = Application::$app->controller->layout;
-//
-//        ob_start();
-//        include_once Application::$ROOT_DIR . "/views/templates/$layout.php";
-//        return ob_get_clean();
-//    }
-//
-//    /**
-//     * @param $view
-//     * @param array $params
-//     * @return bool|string
-//     */
-//    protected function renderOnlyView($view, $params = [])
-//    {
-//        // this is a Variable Variable which transforms the associative array in variables
-        // so that we can use it in the views
-//        foreach ($params as $key => $val) {
-//            $$key = $val;
-//        }
-//
-//        ob_start();
-//        include_once Application::$ROOT_DIR . "/views/templates/$view.php";
-//        return ob_get_clean();
-//    }
+    public function renderViewOnly($view, $params = [])
+    {
+        return Application::$app->view->renderViewOnly($view, $params);
+    }
 }

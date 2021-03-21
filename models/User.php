@@ -9,27 +9,28 @@ use app\core\UserModel;
 class User extends UserModel
 {
     public int $id = 0;
-    public string $firstname = '';
-    public string $lastname = '';
+    public string $name = '';
+    public string $roles = '';
     public string $email = '';
     public string $password = '';
     public string $passwordConfirm = '';
 
     public static function tableName(): string
     {
-        return 'user';
+        return 'User';
     }
 
     public function attributes(): array
     {
-        return ['firstname', 'lastname', 'email', 'password'];
+        return ['name', 'email', 'roles', 'password'];
     }
 
     public function labels(): array
     {
         return [
-            'name' => 'First name',
-            'email' => 'Email',
+            'name' => 'Name',
+            'email' => 'E-mail',
+            'roles' => 'Roles',
             'password' => 'Password',
             'passwordConfirm' => 'Password Confirm'
         ];
@@ -42,6 +43,7 @@ class User extends UserModel
             'email' => [self::RULE_REQUIRED, self::RULE_EMAIL, [
                 self::RULE_UNIQUE, 'class' => self::class
             ]],
+            'roles' => [self::RULE_REQUIRED],
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8]],
             'passwordConfirm' => [[self::RULE_MATCH, 'match' => 'password']],
         ];

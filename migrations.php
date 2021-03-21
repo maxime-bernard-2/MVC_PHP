@@ -10,6 +10,7 @@ $dotenv->load();
 use app\core\Application;
 
 $config = [
+    'userClass' => \app\models\User::class,
     'db' => [
         'dsn' => "mysql:host={$_ENV['DATABASE_HOST']};dbname={$_ENV['DATABASE_NAME']};port={$_ENV['DATABASE_PORT']}",
         'user' => $_ENV['DATABASE_USER'],

@@ -1,32 +1,88 @@
 <?php
 
-declare(strict_types=1);
-
 namespace app\controllers;
 
 use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
-use app\core\Router;
+use app\core\Response;
 use app\models\User;
+use app\models\UserLoginForm;
+use app\models\UserUpdateForm;
 
-/**
- * Class UserController
- * @package app\controllers
- */
 class UserController extends Controller
 {
 
-    public function loginPage(Request $request)
+    public function home()
     {
+        return $this->render('home');
     }
 
-    public function signupPage(Request $request)
-    {  
+    public function login(Request $request)
+    {
+        $loginForm = new UserLoginForm();
+        if ($request->method() === 'post') {
+            $loginForm->loadData($request->getBody());
+            if ($loginForm->validate() && $loginForm->login()) {
+                Application::$app->response->redirect('/');
+                return;
+            }
+        }
+        // $this->setLayout('auth');
+        return $this->render('login', [
+            'model' => $loginForm,
+        ]);
     }
 
-    public function logout(Request $request)
+    public function register(Request $request)
     {
-        $this->redirect('/admin');
+        $registerModel = new User();
+        if ($request->method() === 'post') {
+            $registerModel->loadData($request->getBody());
+            if ($registerModel->validate() && $registerModel->save()) {
+                Application::$app->session->setFlash('success', 'Thanks for registering');
+                Application::$app->response->redirect('/');
+                return 'Show success page';
+            }
+
+        }
+
+        $this->setLayout('auth');
+        return $this->render('register', [
+            'model' => $registerModel,
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $updateForm = new UserUpdateForm(Application::$app->session->get('user'));
+        if ($request->method() === 'post') {
+            $updateForm->loadData($request->getBody());
+            if ($updateForm->validate() && $updateForm->update()) {
+                Application::$app->session->setFlash('success', 'Updated Sucessfully');
+                Application::$app->response->redirect('/');
+                return;
+            }
+        }
+        $this->setLayout('auth');
+        return $this->render('update', [
+            'model' => $updateForm,
+        ]);
+    }
+
+    public function logout(Request $request, Response $response)
+    {
+        Application::$app->logout();
+        $response->redirect('/');
+    }
+
+    public function contact()
+    {
+        return $this->render('contact');
+    }
+
+    public function profile()
+    {
+        return $this->render('profile');
     }
 }
