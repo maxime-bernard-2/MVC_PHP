@@ -17,6 +17,7 @@ class Application
     public Response $response;
     public Controller $controller;
     public Database $db;
+    public Session $session;
 
     /**
      * @return Controller
@@ -46,8 +47,8 @@ class Application
 
         $this->response = new Response();
         $this->request = new Request();
+        $this->session = new Session();
         $this->router = new Router($this->request, $this->response);
-
         $this->db = new Database($config['db']);
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace app\core;
 
@@ -26,7 +26,7 @@ abstract class DBModel extends Model
      *
      * @return boolean
      */
-    public function save(): bool
+    public function save()
     {
         $tableName = $this->tableName();
         $attributes = $this->attributes();

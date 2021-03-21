@@ -1,109 +1,61 @@
 <?php
 
-declare(strict_types=1);
-
 namespace app\models;
 
-use app\core\Application;
-use app\core\DBModel;
-use DateTime;
 
-/**
- * Class User
- * @package app\models
- */
-class User extends DBModel
+use app\core\DbModel;
+use app\core\UserModel;
+
+class User extends UserModel
 {
-    public string $name;
-    public string $email;
-    public string $role;
+    public int $id = 0;
+    public string $firstname = '';
+    public string $lastname = '';
+    public string $email = '';
+    public string $password = '';
+    public string $passwordConfirm = '';
 
     public static function tableName(): string
     {
-        return 'User';
+        return 'user';
     }
 
     public function attributes(): array
     {
-        return ['name', 'email', 'password', 'roles'];
+        return ['firstname', 'lastname', 'email', 'password'];
     }
 
-    public function rules(): array
+    public function labels(): array
     {
         return [
-            'name' => [self::RULE_REQUIRED],
-            'email' => [self::RULE_EMAIL],
+            'name' => 'First name',
+            'email' => 'Email',
+            'password' => 'Password',
+            'passwordConfirm' => 'Password Confirm'
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getName(): string
+    public function rules()
     {
-        return $this->name;
+        return [
+            'name' => [self::RULE_REQUIRED],
+            'email' => [self::RULE_REQUIRED, self::RULE_EMAIL, [
+                self::RULE_UNIQUE, 'class' => self::class
+            ]],
+            'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8]],
+            'passwordConfirm' => [[self::RULE_MATCH, 'match' => 'password']],
+        ];
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
+    public function save()
     {
-        $this->name = $name;
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+
+        return parent::save();
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail(): string
+    public function getDisplayName(): string
     {
-        return $this->email;
-    }
-
-    /**
-     * @param string $email
-     */
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole(): string
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param string $role
-     */
-    public function setRole(string $role): void
-    {
-        $this->role = $role;
-    }
-
-    /**
-     * @param int $connectionNumber
-     */
-    public function connectionNumberUpdate(): void
-    {
-        $pdo = Application::$app->db->pdo;
-        $sql = "UPDATE User SET connection_number=connection_number + 1 WHERE email=?";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$this->email]);
-    }
-
-    /**
-     * @param DateTime $lastConnection
-     */
-    public function lastConnectionUpdate(): void
-    {
-        $pdo = Application::$app->db->pdo;
-        $date = new \DateTime('NOW');
-        $sql = "UPDATE User SET last_connection=? WHERE email=?";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$date->format('Y-m-d H:i:s'),$this->email]);
+        return $this->firstname . ' ' . $this->lastname;
     }
 }
